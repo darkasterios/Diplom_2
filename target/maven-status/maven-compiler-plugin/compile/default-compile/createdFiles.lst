@@ -1,0 +1,9 @@
+UserWithNameFieldOnly.class
+OrderClient.class
+StellarBurgerClient.class
+UserWithoutEmailField.class
+User.class
+UserWithoutPasswordField.class
+UserWithoutNameField.class
+StellarBurgersUserClient.class
+UserWithEmailFieldOnly.class
