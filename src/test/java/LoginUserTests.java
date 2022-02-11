@@ -4,12 +4,13 @@ import jdk.jfr.Description;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class LoginUserTests {
     StellarBurgersUserClient client;
 
+    @Step("Создание StellarBurgerClient перед тестом")
     @Before
     public void setUp() {
         client = new StellarBurgersUserClient();
@@ -17,22 +18,20 @@ public class LoginUserTests {
 
     @DisplayName("Авторизация пользователя")
     @Description("Авторизация пользователя.Позитивная проверка")
-    @Step("Проверка авторизации User-a с валидной парой email/password")
     @Test
     public void loginUserTest() {
         User user = new User("Alex@yandex.ru", "AlexAlex", "Alex");
         boolean isLoggedIn = client.loginUser(UserWithoutNameField.getUsersEmailAndPassword(user))
                 .assertThat().statusCode(200).extract().path("success");
-        assertThat("При авторизации существующего User, возвращается false", isLoggedIn, equalTo(true));
+        assertTrue("При авторизации существующего User, возвращается false", isLoggedIn);
     }
 
     @DisplayName("Авторизация пользователя с несуществующей парой email/password")
     @Description("Авторизация пользователя.Негативная проверка")
-    @Step("Проверка невозможности авторизации User-a с невалидной парой email/password")
     @Test
     public void loginUserWithoutObligatoryField() {
         boolean isLoggedIn = client.loginUser(UserWithoutNameField.getUsersEmailAndPassword(User.getUser()))
                 .assertThat().statusCode(401).extract().path("success");
-        assertThat("User может залогиниться с несуществующей парой email/password", isLoggedIn, equalTo(false));
+        assertFalse("User может залогиниться с несуществующей парой email/password", isLoggedIn);
     }
 }

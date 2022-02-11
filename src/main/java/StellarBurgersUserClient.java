@@ -89,6 +89,5 @@ public class StellarBurgersUserClient extends  StellarBurgerClient{
                 .delete(USER_PATH + "user")
                 .then()
                 .statusCode(202);
-
     }
 }
