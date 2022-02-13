@@ -60,7 +60,7 @@ public class UserDataChangingTests {
     @Test
     public void userEmailChangingWithoutAutorizationTest() {
         boolean isEmailChanged = client.changeUserEmailWithoutToken(UserWithEmailFieldOnly.getUserWithEmailField())
-                .assertThat().statusCode(401).extract().path("success");
+                .statusCode(401).extract().path("success");
         assertFalse("Без авторизации возможно изменить поле email", isEmailChanged);
     }
 
@@ -69,7 +69,7 @@ public class UserDataChangingTests {
     @Test
     public void userNameChangingWithoutAutorizationTest() {
         boolean isNameChanged = client.changeUserNameWithoutToken(UserWithNameFieldOnly.getUserWithNameField())
-                .assertThat().statusCode(401).extract().path("success");
+                .statusCode(401).extract().path("success");
         assertFalse("Без авторизации возможно изменить поле name", isNameChanged);
     }
 
@@ -78,7 +78,7 @@ public class UserDataChangingTests {
     @Test
     public void checkErrorMessageInChangingWithoutAutorizationTest() {
         String errorMessage = client.changeUserNameWithoutToken(UserWithNameFieldOnly.getUserWithNameField())
-                .assertThat().statusCode(401).extract().path("message");
+                .statusCode(401).extract().path("message");
         assertEquals("Возвращается неверный errorMessage при изменении UserData без авторизации",
                 errorMessage, "You should be authorised");
     }

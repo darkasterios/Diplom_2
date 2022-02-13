@@ -36,7 +36,7 @@ public class CreateUserTests {
     public void createUniqueUserTest() {
         User user = User.getUser();
         ValidatableResponse response = client.createUser(user);
-        boolean isCreated = response.assertThat().statusCode(200).extract().path("success");
+        boolean isCreated = response.statusCode(200).extract().path("success");
         token = response.extract().path("accessToken");
         assertTrue("Позитивный кейс создания User возвращает неверный message", isCreated);
     }
@@ -47,7 +47,7 @@ public class CreateUserTests {
     public void createIdenticalUserTest() {
         User user = User.getUser();
         client.createUser(user);
-        String actualMessage = client.createUser(user).assertThat().statusCode(403).extract().path("message");
+        String actualMessage = client.createUser(user).statusCode(403).extract().path("message");
         assertEquals("При создании существующего User возвращается неверный message",
                 actualMessage, "User already exists");
     }
@@ -57,7 +57,7 @@ public class CreateUserTests {
     @Test
     public void createUserWithoutNameFieldTest() {
         UserWithoutNameField user = UserWithoutNameField.getUserWithoutName();
-        String actualMessage = client.createUserWithoutName(user).assertThat().statusCode(403).extract().path("message");
+        String actualMessage = client.createUserWithoutName(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля name возвращается неверный message",
                 actualMessage, "Email, password and name are required fields");
     }
@@ -67,7 +67,7 @@ public class CreateUserTests {
     @Test
     public void createUserWithoutPasswordFieldTest() {
         UserWithoutPasswordField user = UserWithoutPasswordField.getUserWithoutPassword();
-        String actualMessage = client.createUserWithoutPassword(user).assertThat().statusCode(403).extract().path("message");
+        String actualMessage = client.createUserWithoutPassword(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля password возвращается неверный errorMessage",
                 actualMessage, "Email, password and name are required fields");
 
@@ -78,7 +78,7 @@ public class CreateUserTests {
     @Test
     public void createUserWithoutEmailFieldTest() {
         UserWithoutEmailField user = UserWithoutEmailField.getUserWithoutEmailField();
-        String actualMessage = client.createUserWithoutEmail(user).assertThat().statusCode(403).extract().path("message");
+        String actualMessage = client.createUserWithoutEmail(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля email возвращается неверный errorMessage",
                 actualMessage, "Email, password and name are required fields");
 

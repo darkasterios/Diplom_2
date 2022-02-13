@@ -29,7 +29,7 @@ public class OrderTests {
     public void createOrderWithAuthorizationTest() {
         String token = client.loginUser(logedUser).extract().path("accessToken");
         ValidatableResponse actual = orderClient.createOrderWithToken(ingredients, token.substring(7))
-                .assertThat().statusCode(200).body("order.ingredients.id", notNullValue());
+                .statusCode(200).body("order.ingredients.id", notNullValue());
         assertNotNull("Массив Orders возвращается с NullValue id", actual);
     }
 
@@ -38,7 +38,7 @@ public class OrderTests {
     @Test
     public void createOrderWithoutAuthorizationTest() {
         ValidatableResponse response = orderClient.createOrderWithoutToken(ingredients)
-                .assertThat().statusCode(200).body("order.number", notNullValue());
+                .statusCode(200).body("order.number", notNullValue());
         assertNotNull("Массив order возвращается с NullValue number", response);
     }
 
@@ -48,7 +48,7 @@ public class OrderTests {
     public void createOrderWithoutTokenAndIngredientsTest() {
         String expectedErrorMessage = "Ingredient ids must be provided";
         String actualErrorMessage = orderClient.createOrderWithoutToken(emptyIngredients)
-                .assertThat().statusCode(400).extract().path("message");
+                .statusCode(400).extract().path("message");
         assertEquals("При создании заказа без ингредиентов возвращается неверный errorMessage",
                 actualErrorMessage, expectedErrorMessage);
     }
@@ -60,7 +60,7 @@ public class OrderTests {
         String expectedErrorMessage = "Ingredient ids must be provided";
         String token = client.loginUser(logedUser).extract().path("accessToken");
         String actualErrorMessage = orderClient.createOrderWithToken(emptyIngredients, token.substring(7))
-                .assertThat().statusCode(400).extract().path("message");
+                .statusCode(400).extract().path("message");
         assertEquals("При создании заказа без ингредиентов возвращается неверный errorMessage",
                 actualErrorMessage, expectedErrorMessage);
     }
@@ -102,8 +102,7 @@ public class OrderTests {
     @Test
     public void getSpecificUserOrdersWithoutAuthTest() {
         String expectedMessage = "You should be authorised";
-        String actualMessage = orderClient.getOrdersSpecificUserWithoutToken()
-                .assertThat().statusCode(401).extract().path("message");
+        String actualMessage = orderClient.getOrdersSpecificUserWithoutToken().statusCode(401).extract().path("message");
         assertEquals("При получении данных о заказах user-а без авторизации, возвращается неверный actualMessage"
                 , actualMessage, expectedMessage);
     }

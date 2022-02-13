@@ -22,7 +22,7 @@ public class LoginUserTests {
     public void loginUserTest() {
         User user = new User("Alex@yandex.ru", "AlexAlex", "Alex");
         boolean isLoggedIn = client.loginUser(UserWithoutNameField.getUsersEmailAndPassword(user))
-                .assertThat().statusCode(200).extract().path("success");
+                .statusCode(200).extract().path("success");
         assertTrue("При авторизации существующего User, возвращается false", isLoggedIn);
     }
 
@@ -31,7 +31,7 @@ public class LoginUserTests {
     @Test
     public void loginUserWithoutObligatoryField() {
         boolean isLoggedIn = client.loginUser(UserWithoutNameField.getUsersEmailAndPassword(User.getUser()))
-                .assertThat().statusCode(401).extract().path("success");
+                .statusCode(401).extract().path("success");
         assertFalse("User может залогиниться с несуществующей парой email/password", isLoggedIn);
     }
 }
