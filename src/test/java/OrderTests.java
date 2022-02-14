@@ -50,7 +50,8 @@ public class OrderTests {
         String actualErrorMessage = orderClient.createOrderWithoutToken(emptyIngredients)
                 .statusCode(400).extract().path("message");
         assertEquals("При создании заказа без ингредиентов возвращается неверный errorMessage",
-                actualErrorMessage, expectedErrorMessage);
+                expectedErrorMessage,
+                actualErrorMessage);
     }
 
     @DisplayName("Создание заказа с авторизации, без ингридиентов")
@@ -62,7 +63,8 @@ public class OrderTests {
         String actualErrorMessage = orderClient.createOrderWithToken(emptyIngredients, token.substring(7))
                 .statusCode(400).extract().path("message");
         assertEquals("При создании заказа без ингредиентов возвращается неверный errorMessage",
-                actualErrorMessage, expectedErrorMessage);
+                expectedErrorMessage,
+                actualErrorMessage);
     }
 
     @DisplayName("Создание заказа с авторизацией и неверным хэшем ингридиентов")
@@ -71,8 +73,10 @@ public class OrderTests {
     public void createOrderWithAuthInvalidIngredientsHashTest() {
         String invalidIngredientsHash = "{\n" + "\"ingredients\": [1]\n" + "}";
         int actualStatusCode = orderClient.createOrderWithoutToken(invalidIngredientsHash).extract().statusCode();
+        int expectedStatusCode = 500;
         assertEquals("При создании заказа без авторизации с невалидным хэшем возвращает !=500 статус код",
-                actualStatusCode,500);
+                expectedStatusCode,
+                actualStatusCode);
     }
 
     @DisplayName("Создание заказа без авторизации и неверным хэшем ингридиентов")
@@ -83,8 +87,10 @@ public class OrderTests {
         String token = client.loginUser(logedUser).extract().path("accessToken");
         int actualStatusCode = orderClient.createOrderWithToken(invalidIngredientsHash,
                 token.substring(7)).extract().statusCode();
+        int expectedStatusCode = 500;
         assertEquals("При создании заказа с авторизацией и невалидным хэшем возвращает !=500 статус код",
-                actualStatusCode,500);
+                expectedStatusCode,
+                actualStatusCode);
     }
 
     @DisplayName("Получение заказов конкретного пользователя: с авторизацией")
@@ -103,7 +109,8 @@ public class OrderTests {
     public void getSpecificUserOrdersWithoutAuthTest() {
         String expectedMessage = "You should be authorised";
         String actualMessage = orderClient.getOrdersSpecificUserWithoutToken().statusCode(401).extract().path("message");
-        assertEquals("При получении данных о заказах user-а без авторизации, возвращается неверный actualMessage"
-                , actualMessage, expectedMessage);
+        assertEquals("При получении данных о заказах user-а без авторизации, возвращается неверный actualMessage",
+                expectedMessage,
+                actualMessage);
     }
 }

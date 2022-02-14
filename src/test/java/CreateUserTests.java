@@ -49,7 +49,8 @@ public class CreateUserTests {
         client.createUser(user);
         String actualMessage = client.createUser(user).statusCode(403).extract().path("message");
         assertEquals("При создании существующего User возвращается неверный message",
-                actualMessage, "User already exists");
+                "User already exists",
+                actualMessage);
     }
 
     @DisplayName("Создание User-а без name field")
@@ -59,7 +60,8 @@ public class CreateUserTests {
         UserWithoutNameField user = UserWithoutNameField.getUserWithoutName();
         String actualMessage = client.createUserWithoutName(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля name возвращается неверный message",
-                actualMessage, "Email, password and name are required fields");
+                "Email, password and name are required fields",
+                actualMessage);
     }
 
     @DisplayName("Создание User-а без password field")
@@ -69,7 +71,8 @@ public class CreateUserTests {
         UserWithoutPasswordField user = UserWithoutPasswordField.getUserWithoutPassword();
         String actualMessage = client.createUserWithoutPassword(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля password возвращается неверный errorMessage",
-                actualMessage, "Email, password and name are required fields");
+                "Email, password and name are required fields",
+                actualMessage);
 
     }
 
@@ -80,7 +83,8 @@ public class CreateUserTests {
         UserWithoutEmailField user = UserWithoutEmailField.getUserWithoutEmailField();
         String actualMessage = client.createUserWithoutEmail(user).statusCode(403).extract().path("message");
         assertEquals("При создании User без поля email возвращается неверный errorMessage",
-                actualMessage, "Email, password and name are required fields");
+                "Email, password and name are required fields",
+                actualMessage);
 
     }
 

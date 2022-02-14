@@ -79,7 +79,9 @@ public class UserDataChangingTests {
     public void checkErrorMessageInChangingWithoutAutorizationTest() {
         String errorMessage = client.changeUserNameWithoutToken(UserWithNameFieldOnly.getUserWithNameField())
                 .statusCode(401).extract().path("message");
+        String expectedMessage = "You should be authorised";
         assertEquals("Возвращается неверный errorMessage при изменении UserData без авторизации",
-                errorMessage, "You should be authorised");
+                expectedMessage,
+                errorMessage);
     }
 }
